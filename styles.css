@@ -622,7 +622,7 @@ nav {
     width: 200px;  /* Mantenha ou ajuste este valor */
     height: 200px; /* Mantenha igual à largura para manter a proporção */
     bottom: -5px; /* p o gatinho subir */            
-    left: 0%;      /* Mantém na esquerda, ou ajuste para um pequeno padding como 20px */
+   
    
 }
 
@@ -633,6 +633,12 @@ nav {
     object-fit: contain; 
     display: block; 
 }
+@media (max-width: 768px) {
+  .gato {
+    display: none;
+  }
+}
+
 
 /* Os outros elementos de decoração */
 .decoration {
@@ -712,3 +718,10 @@ nav {
 #contato{
   scroll-margin-top: -30px;
 }
+
+@media (min-width: 1200px) {
+  .hero h1 {
+    font-size: 4rem;
+  }
+}
+

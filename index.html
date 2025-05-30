@@ -29,7 +29,7 @@
 <main class="main" id="home">
         <div class="container">
             <div class="decoration cat">
-                <img src="./gatinho.jpg" alt="Gato pixel art" class="cat-img">
+                <img src="./assets/fotos/gatinho.jpg" alt="Gato pixel art" class="cat-img">
             </div>
            
   <section class="hero" >
@@ -54,7 +54,7 @@
  
   <!-- Capa do álbum -->
   <div id="album-box" onclick="togglePlayer()">
-    <img src="./guitarra.jpg" alt="Lonely Day">
+    <img src="./assets/fotos/guitarra.jpg" alt="Lonely Day">
   </div>
 
   <!-- Player embutido do Spotify -->
@@ -69,7 +69,7 @@
 <section class="about-me-background" id="sobre">
   <div class="about-me-content">
     <div class="profile-image">
-      <img src="./WhatsApp Image 2025-05-12 at 22.23.12.jpeg" alt="Sua Foto">
+      <img src="./assets/fotos/WhatsApp Image 2025-05-12 at 22.23.12.jpeg" alt=" Foto">
     </div>
     <div class="about-me-text">
       <h1>Sobre Mim</h1>
@@ -110,8 +110,8 @@
   <p class="projects-subtitle">Uma seleção dos meus projetos pessoais e profissionais</p>
   <div class="projects-grid">
     <div class="project-card">
-      <h3>Jogo da Forca</h3>
-      <p>Um jogo da forca simples onde o jogador tenta adivinhar uma palavra secreta letra por letra. A interface mostrará as letras adivinhadas corretamente, as letras erradas e o número de tentativas restantes.</p>
+      <h3>Lista de Tarefas</h3>
+      <p>Sistema básico para registrar e marcar atividades completas, ideal para tarefas pessoais ou simples.</p>
       <div class="project-tags">
         <span class="tag">JavaScript</span>
         <span class="tag">CSS</span>
@@ -124,12 +124,12 @@
     </div>
 
     <div class="project-card">
-      <h3>Flappy Bird</h3>
-      <p>Um clone do popular jogo Flappy Bird criado com JavaScript puro e HTML5 Canvas.</p>
+      <h3>Kanban</h3>
+      <p>Método visual avançado que organiza tarefas em colunas (como "A Fazer", "Em Andamento"), permitindo gerenciar fluxos de trabalho complexos com arrastar e soltar.</p>
       <div class="project-tags">
         <span class="tag">JavaScript</span>
-        <span class="tag">Canvas API</span>
-        <span class="tag">Game Development</span>
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
       </div>
       <div class="project-links">
         <a href="#" target="_blank"><i class="fab fa-github"></i> Code</a>
@@ -138,11 +138,11 @@
     </div>
 
     <div class="project-card">
-      <h3>Encurtador de URLs</h3>
-      <p>Uma API simples que recebe uma URL longa e retorna uma URL curta e única. Ao acessar a URL curta, o usuário é redirecionado para a URL original.</p>
+      <h3>Calculadora</h3>
+      <p> Uma ferramenta que executa cálculos matemáticos, desde operações básicas até funções complexas, apresentando resultados imediatos para auxiliar em diversas atividades.</p>
       <div class="project-tags">
-        <span class="tag">Node.js</span>
-        <span class="tag">Express.js</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">CSS e HTML</span>
         
       </div>
       <div class="project-links">
@@ -152,61 +152,70 @@
 
     </div>
 </section>
-<section class="get-in-touch" id="contato">
-   <h2>Entre em contato</h2>
-   <p class="get-in-touch-subtitle">Tem um projeto em mente ou quer discutir oportunidades? Adoraria ouvir você!</p>
-   <div class="get-in-touch-container">
-     <div class="contact-form">
-       <div class="form-group">
-         <label for="name">Nome</label>
-         <input type="text" id="name" name="name" placeholder="nome">
-       </div>
-       <div class="form-group">
-         <label for="email">Email</label>
-         <input type="email" id="email" name="email" placeholder="email">
-       </div>
-       <div class="form-group">
-         <label for="subject">Assunto</label>
-         <input type="text" id="subject" name="subject" placeholder="assuntos de interesse">
-       </div>
-       <div class="form-group">
-         <label for="message">Mensagem</label>
-         <textarea id="message" name="message" placeholder="enviar uma mensagem"></textarea>
-       </div>
-       <button type="submit" class="submit-button">Enviar</button>
-     </div>
-     <div class="contact-info">
-       <div class="info-card">
-         <i class="fas fa-envelope"></i>
-         <div class="info-text">
-           <h3>Email</h3>
-           <p><a href="mailto:SEU_EMAIL" >raissaandradesantos8@gmail.com</a></p>
-         </div>
-       </div>
-       <div class="info-card">
-         <i class="fas fa-map-marker-alt"></i>
-         <div class="info-text">
-           <h3>Localização</h3>
-           <p>Aracaju-SE</p>
-         </div>
-       </div>
-       <div class="info-card">
-         <i class="fas fa-phone"></i>
-         <div class="info-text">
-           <h3>Telefone</h3>
-           <p>(79)99923-5765</p>
-         </div>
-       </div>
-     </div>
-   </div>
- </section>
+  <section class="get-in-touch" id="contato">
+  <h2>Entre em contato</h2>
+  <p class="get-in-touch-subtitle">Tem um projeto em mente ou quer discutir oportunidades? Adoraria ouvir você!</p>
+  <div class="get-in-touch-container">
+    <div class="contact-form">
+      <form id="contact-form" action="https://formsubmit.co/raissaandradesantos8@gmail.com" method="POST">
+        <h3>Formulário de Contato</h3>
+        <div class="form-group">
+          <label for="name">Nome</label>
+          <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="subject">Assunto</label>
+          <input type="text" id="subject" name="subject" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="message">Mensagem</label>
+          <textarea id="message" name="message" class="form-control" required></textarea>
+        </div>
+
+        <input type="hidden" name="_captcha" value="false">
+        <button type="submit" class="submit-button">Enviar</button>
+      </form>
+      <div id="status-message" style="margin-top: 15px; font-weight: bold;"></div>
+    </div>
+
+    <div class="contact-info">
+      <div class="info-card">
+        <i class="fas fa-envelope"></i>
+        <div class="info-text">
+          <h3>Email</h3>
+          <p><a href="mailto:raissaandradesantos8@gmail.com">raissaandradesantos8@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="info-card">
+        <i class="fas fa-map-marker-alt"></i>
+        <div class="info-text">
+          <h3>Localização</h3>
+          <p>Aracaju-SE</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <i class="fas fa-phone"></i>
+        <div class="info-text">
+          <h3>Telefone</h3>
+          <p>(79) 99923-5765</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
  <footer class="main-footer">
    <div class="footer-content">
      <p>&copy; 2025 Raissa Andrade. Todos os direitos reservados.</p>
      <div class="footer-social">
-       <a href="SEU_LINKEDIN" target="_blank"><i class="fab fa-linkedin"></i></a>
-       <a href="SEU_GITHUB" target="_blank"><i class="fab fa-github"></i></a>
-       <a href="mailto:SEU_EMAIL"><i class="fas fa-envelope"></i></a>
+      
+       <a href="https://github.com/raissaand" target="_blank"><i class="fab fa-github"></i></a>
+       
+
        </div>
    </div>
  </footer>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jogo da Memória</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8d7da, #fce4ec);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      color: #d63031;
+      margin-bottom: 10px;
+    }
+
+    .painel {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #nivel, #movimentos, #recorde, #mensagem {
+      font-size: 1.1rem;
+      margin: 5px 0;
+      color: #2d3436;
+    }
+
+    .tabuleiro {
+      display: grid;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .carta {
+      width: 100px;
+      height: 100px;
+      background-color: #ffeaa7;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #2d3436;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    .carta:hover {
+      transform: scale(1.05);
+    }
+
+    .revelada {
+      background-color: #fab1a0;
+    }
+
+    .pareada {
+      background-color: #b2bec3;
+      color: #636e72;
+    }
+
+    button {
+      margin: 5px;
+      padding: 8px 16px;
+      font-size: 1rem;
+      background-color: #d63031;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #c0392b;
+    }
+
+    @media (max-width: 500px) {
+      .carta {
+        width: 70px;
+        height: 70px;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>JOGO DA MEMÓRIA</h2>
+  <div class="painel">
+    <button onclick="mudarNivel('facil')">Fácil</button>
+    <button onclick="mudarNivel('medio')">Médio</button>
+    <button onclick="mudarNivel('dificil')">Difícil</button>
+    <div id="nivel">Nível atual: Fácil</div>
+    <div id="movimentos">Movimentos: 0</div>
+    <div id="recorde">Recorde: --</div>
+    <button onclick="criarTabuleiro()">Tentar novamente</button>
+    <div id="mensagem"></div>
+  </div>
+
+  <div class="tabuleiro" id="tabuleiro"></div>
+
+  <script>
+    const niveis = {
+      facil: 4,
+      medio: 6,
+      dificil: 8
+    };
+    const emojisBase = ['🍎','🚗','🐶','⚽','🐱','🎮','🎲','🎵','🍕','🎯','🧸','📚'];
+    let nivelAtual = 'facil';
+    let emojis = [];
+    let cartas = [];
+    let carta1 = null;
+    let carta2 = null;
+    let travado = false;
+    let movimentos = 0;
+    let paresFeitos = 0;
+
+    function embaralhar(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function atualizarInfos() {
+      document.getElementById('movimentos').textContent = 'Movimentos: ' + movimentos;
+      document.getElementById('nivel').textContent = 'Nível atual: ' + nivelAtual.charAt(0).toUpperCase() + nivelAtual.slice(1);
+      const recorde = localStorage.getItem('recorde_' + nivelAtual);
+      document.getElementById('recorde').textContent = 'Recorde: ' + (recorde || '--');
+    }
+
+    function mostrarMensagem(texto) {
+      document.getElementById('mensagem').textContent = texto;
+    }
+
+    function criarTabuleiro() {
+      const totalPares = niveis[nivelAtual];
+      emojis = embaralhar([...emojisBase].slice(0, totalPares));
+      const tabuleiro = document.getElementById('tabuleiro');
+      tabuleiro.innerHTML = '';
+      tabuleiro.style.gridTemplateColumns = `repeat(${Math.min(totalPares, 4)}, 100px)`;
+
+      cartas = embaralhar([...emojis, ...emojis]);
+      carta1 = carta2 = null;
+      movimentos = paresFeitos = 0;
+      travado = false;
+
+      atualizarInfos();
+      mostrarMensagem('');
+
+      cartas.forEach((emoji, index) => {
+        const div = document.createElement('div');
+        div.classList.add('carta');
+        div.dataset.index = index;
+        div.dataset.emoji = emoji;
+        div.textContent = '';
+        div.addEventListener('click', virarCarta);
+        tabuleiro.appendChild(div);
+      });
+    }
+
+    function virarCarta() {
+      if (travado || this.classList.contains('revelada') || this.classList.contains('pareada')) return;
+
+      this.textContent = this.dataset.emoji;
+      this.classList.add('revelada');
+
+      if (!carta1) {
+        carta1 = this;
+      } else {
+        carta2 = this;
+        travado = true;
+        movimentos++;
+        atualizarInfos();
+
+        if (carta1.dataset.emoji === carta2.dataset.emoji) {
+          carta1.classList.add('pareada');
+          carta2.classList.add('pareada');
+          paresFeitos++;
+          resetarCartas();
+
+          if (paresFeitos === niveis[nivelAtual]) {
+            verificarRecorde();
+            mostrarMensagem('🎉 Você ganhou! Reiniciando...');
+            setTimeout(criarTabuleiro, 2000);
+          }
+
+        } else {
+          setTimeout(() => {
+            carta1.textContent = '';
+            carta2.textContent = '';
+            carta1.classList.remove('revelada');
+            carta2.classList.remove('revelada');
+            resetarCartas();
+          }, 900);
+        }
+      }
+    }
+
+    function resetarCartas() {
+      carta1 = null;
+      carta2 = null;
+      travado = false;
+    }
+
+    function mudarNivel(novoNivel) {
+      nivelAtual = novoNivel;
+      criarTabuleiro();
+    }
+
+    function verificarRecorde() {
+      const chave = 'recorde_' + nivelAtual;
+      const recordeAtual = localStorage.getItem(chave);
+      if (!recordeAtual || movimentos < parseInt(recordeAtual)) {
+        localStorage.setItem(chave, movimentos);
+      }
+    }
+
+    criarTabuleiro();
+  </script>
+</body>
+</html>
